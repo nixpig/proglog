@@ -5,5 +5,5 @@ compile:
 		--proto_path="."
 
 test:
-	go test -race ./...
+	go test -v -race -buildvcs ./...
 
