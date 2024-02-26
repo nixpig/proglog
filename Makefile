@@ -15,3 +15,6 @@ test:
 test_coverage:
 	go test -v -race -buildvcs -coverprofile=coverage.out ./...
 	go tool cover -html=coverage.out
+
+clean:
+	rm -rf bin tmp 
