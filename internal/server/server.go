@@ -4,6 +4,7 @@ import (
 	"context"
 
 	api "github.com/nixpig/proglog/api/v1"
+	"google.golang.org/grpc"
 )
 
 type Config struct {
@@ -12,6 +13,7 @@ type Config struct {
 
 type CommitLog interface {
 	Append(*api.Record) (uint64, error)
+
 	Read(uint64) (*api.Record, error)
 }
 
@@ -20,6 +22,17 @@ var _ api.LogServer = (*grpcServer)(nil)
 type grpcServer struct {
 	api.UnimplementedLogServer
 	*Config
+}
+
+func NewGRPCServer(config *Config) (*grpc.Server, error) {
+	gsrv := grpc.NewServer()
+	srv, err := newgrpcServer(config)
+	if err != nil {
+		return nil, err
+	}
+
+	api.RegisterLogServer(gsrv, srv)
+	return gsrv, nil
 }
 
 func newgrpcServer(config *Config) (srv *grpcServer, err error) {
@@ -66,7 +79,10 @@ func (s *grpcServer) ProduceStream(stream api.Log_ProduceStreamServer) error {
 	}
 }
 
-func (s *grpcServer) ConsumeStream(req *api.ConsumeRequest, stream api.Log_ConsumeStreamServer) error {
+func (s *grpcServer) ConsumeStream(
+	req *api.ConsumeRequest,
+	stream api.Log_ConsumeStreamServer,
+) error {
 	for {
 		select {
 		case <-stream.Context().Done():
