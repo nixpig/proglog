@@ -18,5 +18,14 @@ jobs:
       - name: Checkout repo code
         uses: actions/checkout@v4
 
+      - name: Initialise env
+        run: make init
+
+      - name: Generate certs
+        run: make gencert
+
+      - name: Compile protobufs
+        run: make compile
+
       - name: Run unit tests
         run: make test
