@@ -6,8 +6,14 @@ init:
 
 .PHONY: install
 install:
-	go install github.com/cloudflare/cfssl/cmd/cfssl@v1.6.4
-	go install github.com/cloudflare/cfssl/cmd/cfssljson@v1.6.4
+	cfsslVersion="1.6.4"
+	pbVersion="3.18.0"
+	pbFilename="protoc-${pbVersion}-linux-x86_64.zip"
+	pbZipUri="https://github.com/protocolbuffers/protobuf/releases/download/v${pbVersion}/${pbFilename}"
+	curl -LJO $pbZipUri  \
+			&& unzip ${pbFilename} -d ~/.local/bin/protobuf
+	go install github.com/cloudflare/cfssl/cmd/cfssl@v${cfsslVersion}
+	go install github.com/cloudflare/cfssl/cmd/cfssljson@v${cfsslVersion}
 	go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
 
