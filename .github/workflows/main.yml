@@ -21,6 +21,9 @@ jobs:
       - name: Initialise env
         run: make init
 
+      - name: Install env
+        run: make install
+
       - name: Generate certs
         run: make gencert
 
