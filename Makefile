@@ -10,7 +10,7 @@ install:
 	pbVersion="3.18.0"
 	pbFilename="protoc-${pbVersion}-linux-x86_64.zip"
 	pbZipUri="https://github.com/protocolbuffers/protobuf/releases/download/v${pbVersion}/${pbFilename}"
-	curl -LJO $pbZipUri  \
+	curl -LJO ${pbZipUri}  \
 			&& unzip ${pbFilename} -d ~/.local/bin/protobuf
 	go install github.com/cloudflare/cfssl/cmd/cfssl@v${cfsslVersion}
 	go install github.com/cloudflare/cfssl/cmd/cfssljson@v${cfsslVersion}
