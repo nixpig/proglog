@@ -7,7 +7,7 @@ init:
 .PHONY: install
 install:
 	curl -LJO https://github.com/protocolbuffers/protobuf/releases/download/v3.18.0/protoc-3.18.0-linux-x86_64.zip \
-			&& unzip protoc-3.18.0-linux-x86_64.zip -d ~/.local/bin/protobuf
+			&& unzip protoc-3.18.0-linux-x86_64.zip -d /usr/local/bin/protobuf
 	go install github.com/cloudflare/cfssl/cmd/cfssl@v1.6.4
 	go install github.com/cloudflare/cfssl/cmd/cfssljson@v1.6.4
 	go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
