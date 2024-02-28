@@ -13,14 +13,24 @@ install:
 
 .PHONY: gencert
 gencert:
+	# generate certificate authority cert files
 	cfssl gencert \
 		-initca test/ca-csr.json | cfssljson -bare ca
+	# generate server cert files
 	cfssl gencert \
 		-ca=ca.pem \
 		-ca-key=ca-key.pem \
 		-config=test/ca-config.json \
 		-profile=server \
 		test/server-csr.json | cfssljson -bare server
+	# generate client cert files
+	cfssl gencert \
+		-ca=ca.pem \
+		-ca-key=ca-key.pem \
+		-config=test/ca-config.json \
+		-profile=client \
+		test/client-csr.json | cfssljson -bare client
+	# move cert files to config path
 	mv *.pem *.csr ${CONFIG_PATH}
 
 .PHONY: compile
