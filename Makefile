@@ -59,7 +59,7 @@ compile:
 
 .PHONY: test
 test: ${CONFIG_PATH}/policy.csv ${CONFIG_PATH}/model.conf
-	go test -v -race -buildvcs ./...
+	go test -v -race -buildvcs ./... 
 
 .PHONY: test_coverage
 test_coverage:
